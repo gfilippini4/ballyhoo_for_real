@@ -1,0 +1,55 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/utils.html" as utils %}
+
+<head>
+{% block title %}This is an example page{% endblock %}
+</head>
+
+{% block body %}
+<body style="margin:0;background-image:{{url_for('static', filename='newspaper.jpg')}};background-size: cover;background-position:center">
+
+
+  <div id="main" class="container-fluid">
+    <!div class="jumbotron" style="background-color:rgb(116,206,226)">
+    <div class="jumbotron" style="background-image:{{url_for('static', filename='Banner.jpg')}}; background-size:auto;background-position:center;background-repeat:no-repeat;">
+    </div>
+    <div>
+      <ul id="top_bar">
+        <li id="tp"><img style="width:56px;height:56px;" src="{{url_for('static', filename='logo.jpg')}}"></li>
+        <li id="tp"><a href="default.asp">Home</a></li>
+        <li id="tp"><a href="news.asp">News</a></li>
+        <li id="tp"><a href="contact.asp">Contact</a></li>
+        <li id="tp" style="float:right;"><a class="active" href="#about">Login/sign up</a></li>
+      </ul>
+    </div>
+
+
+    <div class="wrapper" style="margin:0">
+      <div class="sidebar">
+        <ul id = "second_scroll">
+          <li id="second"><a class="active" href="#home">Home</a></li>
+          <li id="second"><a href="#news">News</a></li>
+          <li id="second"><a href="#contact">Contact</a></li>
+          <li id="second"><a href="#about">About</a></li>
+        </ul>
+      </div>
+      <div class="content" >
+        <h2>Fixed Full-height Side Nav</h2>
+        <h3>Try to scroll this area, and see how the sidenav sticks to the page</h3>
+        <p>Notice that this div element has a left margin of 25%. This is because the side navigation is set to 25% width. If you remove the margin, the sidenav will overlay/sit on top of this div.</p>
+        <p>Also notice that we have set overflow:auto to sidenav. This will add a scrollbar when the sidenav is too long (for example if it has over 50 links inside of it).</p>
+        <p>Some text..</p>
+        <p>Some text..</p>
+        <p>Some text..</p>
+        <p>Some text..</p>
+        <p>Some text..</p>
+        <p>Some text..</p>
+        <p>Some text..</p>
+      </div>
+    </div>
+
+
+  </div>
+
+</body>
+{% endblock %}

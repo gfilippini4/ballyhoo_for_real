@@ -1,0 +1,70 @@
+Microsoft wants regulation of facial recognition technology to limit 'abuse'
+
+Link: https://money.cnn.com/2018/07/14/technology/microsoft-facial-recognition-letter-government/index.html?obOrigUrl=true
+
+
+
+
+
+In a blog post, Microsoft (MSFT)President Brad Smith said new laws are necessary given the technology's "broad societal ramifications and potential for abuse."
+
+He urged lawmakers to form "a government initiative to regulate the proper use of facial recognition technology, informed first by a bipartisan and expert commission."
+
+Facial recognition -- a computer's ability to identify or verify people's faces from a photo or through a camera -- has been developing rapidly. Apple (AAPL), Google (GOOG), Amazon and Microsoft are among the big tech companies developing and selling such systems. The technology is being used across a range of industries, from private businesses like hotels and casinos, to social media and law enforcement.
+
+Supporters say facial recognition software improves safety for companies and customers and can help police track police down criminals or find missing children. Civil rights groups warn it can infringe on privacy and allow for illegal surveillance and monitoring. There is also room for error, they argue, since the still-emerging technology can result in false identifications.
+
+The accuracy of facial recognition technologies varies, with women and people of color being identified with less accuracy, according to MIT research.
+
+"Facial recognition raises a critical question: what role do we want this type of technology to play in everyday society?" Smith wrote on Friday.
+
+Smith's call for a regulatory framework to control the technology comes as tech companies face criticism over how they've handled and shared customer data, as well as their cooperation with government agencies.
+
+Last month, Microsoft was scrutinized for its working relationship with US Immigration and Customs Enforcement. ICE had been enforcing the Trump administration's "zero tolerance" immigration policy that separated children from their parents when they crossed the US border illegally. The administration has since abandoned the policy.
+
+Microsoft urges Trump administration to change its policy separating families at border
+
+Microsoft wrote a blog post in January about ICE's use of its cloud technology Azure, saying it could help it "accelerate facial recognition and identification."
+
+After questions arose about whether Microsoft's technology had been used by ICE agents to carry out the controversial border separations, the company released a statement calling the policy "cruel" and "abusive."
+
+In his post, Smith reiterated Microsoft's opposition to the policy and said he had confirmed its contract with ICE does not include facial recognition technology.
+
+Amazon (AMZN) has also come under fire from its own shareholders and civil rights groups over local police forces using its face identifying software Rekognition, which can identify up to 100 people in a single photo.
+
+Some Amazon shareholders coauthored a letter pressuring Amazon to stop selling the technology to the government, saying it was aiding in mass surveillance and posed a threat to privacy rights.
+
+Amazon asked to stop selling facial recognition technology to police
+
+And Facebook (FB) is embroiled in a class-action lawsuit that alleges the social media giant used facial recognition on photos without user permission. Its facial recognition tool scans your photos and suggests you tag friends.
+
+Neither Amazon nor Facebook immediately responded to a request for comment about Smith's call for new regulations on face ID technology.
+
+Smith said companies have a responsibility to police their own innovations, control how they are deployed and ensure that they are used in a "a manner consistent with broadly held societal values."
+
+"It may seem unusual for a company to ask for government regulation of its products, but there are many markets where thoughtful regulation contributes to a healthier dynamic for consumers and producers alike," he said.
+
+Most stock quote data provided by BATS. Market indices are shown in real time, except for the DJIA, which is delayed by two minutes. All times are ET. Disclaimer. Morningstar: © 2018 Morningstar, Inc. All Rights Reserved. Factset: FactSet Research Systems Inc. 2018. All rights reserved. Chicago Mercantile Association: Certain market data is the property of Chicago Mercantile Exchange Inc. and its licensors. All rights reserved. Dow Jones: The Dow Jones branded indices are proprietary to and are calculated, distributed and marketed by DJI Opco, a subsidiary of S&P Dow Jones Indices LLC and have been licensed for use to S&P Opco, LLC and CNN. Standard & Poor's and S&P are registered trademarks of Standard & Poor's Financial Services LLC and Dow Jones is a registered trademark of Dow Jones Trademark Holdings LLC. All content of the Dow Jones branded indices © S&P Dow Jones Indices LLC 2018 and/or its affiliates.
+
+© 2018 Cable News Network. A WarnerMedia Company. All Rights Reserved. Terms under which this service is provided to you.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+We use cookies to understand how you use our site and to improve your experience. This includes personalizing content and advertising. To learn more, click here. By continuing to use our site, you accept our use of cookies, revised Privacy Policy and Terms of Use.
+
