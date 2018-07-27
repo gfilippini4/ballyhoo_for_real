@@ -34,6 +34,16 @@ def get_hooks():
         dict =  hit_database(data['hooks'].split())
         return jsonify(dict)
 
+@app.route("/getAllHooks", methods=['GET','POST'])
+def get_all_hooks():
+    if request.method =='POST':
+        data = {'hooks': []}
+        sql = "select distinct(hook) from Articles.hooks;"
+        cursor.execute(sql)
+        for hook in cursor:
+            data['hooks'].append(hook)
+        return jsonify(data)
+
 def hit_database(hooks):
     data = {}
     print(hooks)

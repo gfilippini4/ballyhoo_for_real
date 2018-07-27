@@ -1,22 +1,25 @@
 {% extends "bootstrap/base.html" %}
 
 
-{% block title %}please{% endblock %}
+{% block title %}Ballyhoo{% endblock %}
 
 {% block body_attribs %}
-style="background-color:lightgrey"
+style="background-image:url({{url_for('static',filename='newspaper.jpg')}});background-position: center top;background-size: 100% auto"
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid">
   <h1 style="text-align:center">
-    Ballyhoo
+    <img src="{{url_for('static',filename='banner.jpg')}}" style="height:200px">
   </h1>
     <div style="text-align:center">
+      <img src="{{url_for('static',filename='logo.jpg')}}" style="height:40px">
       <label>Look Up Hook</label>
       <input id="hook" text="text" style="width:500px;"placeholder="Hooks">
       <button id="button1"> search</button>
+      <button id="button2">Get Hooks</button>
     </div>
+
     <div class="container" style="text-align:center">
       <h1 ><strong id="error_message"></strong></h1>
       <div id="header">
@@ -28,7 +31,7 @@ style="background-color:lightgrey"
   <script type=text/javascript>
     $("#button1").click(function(event) {
       var input = $("#hook").val()
-      var cars = {'hooks': input};
+      var data = {'hooks': input};
       event.preventDefault();
       event.stopPropagation();
       $.post({
@@ -36,7 +39,7 @@ style="background-color:lightgrey"
         type: "POST",
         dataType:'json',
         contentType: 'application/json',
-        data: JSON.stringify(cars),
+        data: JSON.stringify(data),
         success: function(data){
             console.log(Object.keys(data).length);
             $("#header ul").empty()
@@ -55,11 +58,30 @@ style="background-color:lightgrey"
                 }
               }
             } else {
-              $('#error_message').text('Error Occurred!')
+              $('#error_message').text('No Articles With Those Hooks!')
             }
         }
       });
-
+    })
+    $("#button2").click(function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      $.post({
+        url: "getAllHooks",
+        type: "POST",
+        success: function(data){
+          $("#header ul").empty()
+          console.log(data)
+          if(data['hooks'].length != 0) {
+            $('#error_message').text('')
+              for(var i = 0; i < data['hooks'].length; i++){
+                $("#header ul").append('<li><span class="tab">'+data['hooks'][i]+'</span></a></li>');
+              }
+          } else {
+            $('#error_message').text('No Hooks!')
+          }
+        }
+      });
     })
   </script>
 </div>
