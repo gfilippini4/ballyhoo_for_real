@@ -12,12 +12,43 @@
 # Afterwards, point your browser to http://localhost:5000, then check out the
 # source.
 
-from flask import Flask
+from flask import Flask, url_for, render_template, request, jsonify
 from flask_bootstrap import Bootstrap
+import json
+import mysql.connector as connector
+client = connector.connect(user='ballyhoo',password='[newsnow]',host='127.0.0.1',database='Articles')
+cursor = client.cursor()
 
-def create_app():
+app = Flask(__name__)
+Bootstrap(app)
 
-    app = Flask(__name__)
-    Bootstrap(app)
+@app.route('/')
+def index():
+    return render_template('base_extended.html')
 
-    return app
+@app.route("/getHooks", methods=['GET', 'POST'])
+def get_hooks():
+    if request.method =='POST':
+        data = request.get_json()
+        print(data)
+        dict =  hit_database(data['hooks'].split())
+        return jsonify(dict)
+
+def hit_database(hooks):
+    data = {}
+    print(hooks)
+    for hook in hooks:
+        print(hook)
+        try:
+            cursor.execute("""
+            select a.url, a.title from Articles.articles as a join Articles.hooks as h on a.id = h.id where h.hook = '""" + hook + "';")
+            for url in cursor:
+                if hook in data.keys():
+                    data[hook].append(url)
+                else:
+                    data[hook] = [url]
+            client.commit()
+        except Exception as e:
+            print(str(e))
+    print(data)
+    return data

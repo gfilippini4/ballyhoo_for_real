@@ -1,55 +1,66 @@
 {% extends "bootstrap/base.html" %}
-{% import "bootstrap/utils.html" as utils %}
-
-<head>
-{% block title %}This is an example page{% endblock %}
-</head>
-
-{% block body %}
-<body style="margin:0;background-image:{{url_for('static', filename='newspaper.jpg')}};background-size: cover;background-position:center">
 
 
-  <div id="main" class="container-fluid">
-    <!div class="jumbotron" style="background-color:rgb(116,206,226)">
-    <div class="jumbotron" style="background-image:{{url_for('static', filename='Banner.jpg')}}; background-size:auto;background-position:center;background-repeat:no-repeat;">
+{% block title %}please{% endblock %}
+
+{% block body_attribs %}
+style="background-color:lightgrey"
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+  <h1 style="text-align:center">
+    Ballyhoo
+  </h1>
+    <div style="text-align:center">
+      <label>Look Up Hook</label>
+      <input id="hook" text="text" style="width:500px;"placeholder="Hooks">
+      <button id="button1"> search</button>
     </div>
-    <div>
-      <ul id="top_bar">
-        <li id="tp"><img style="width:56px;height:56px;" src="{{url_for('static', filename='logo.jpg')}}"></li>
-        <li id="tp"><a href="default.asp">Home</a></li>
-        <li id="tp"><a href="news.asp">News</a></li>
-        <li id="tp"><a href="contact.asp">Contact</a></li>
-        <li id="tp" style="float:right;"><a class="active" href="#about">Login/sign up</a></li>
-      </ul>
-    </div>
-
-
-    <div class="wrapper" style="margin:0">
-      <div class="sidebar">
-        <ul id = "second_scroll">
-          <li id="second"><a class="active" href="#home">Home</a></li>
-          <li id="second"><a href="#news">News</a></li>
-          <li id="second"><a href="#contact">Contact</a></li>
-          <li id="second"><a href="#about">About</a></li>
+    <div class="container" style="text-align:center">
+      <h1 ><strong id="error_message"></strong></h1>
+      <div id="header">
+        <ul class="tabs" style="list-style-type:none">
         </ul>
       </div>
-      <div class="content" >
-        <h2>Fixed Full-height Side Nav</h2>
-        <h3>Try to scroll this area, and see how the sidenav sticks to the page</h3>
-        <p>Notice that this div element has a left margin of 25%. This is because the side navigation is set to 25% width. If you remove the margin, the sidenav will overlay/sit on top of this div.</p>
-        <p>Also notice that we have set overflow:auto to sidenav. This will add a scrollbar when the sidenav is too long (for example if it has over 50 links inside of it).</p>
-        <p>Some text..</p>
-        <p>Some text..</p>
-        <p>Some text..</p>
-        <p>Some text..</p>
-        <p>Some text..</p>
-        <p>Some text..</p>
-        <p>Some text..</p>
-      </div>
     </div>
-
-
   </div>
+  <script type=text/javascript>
+    $("#button1").click(function(event) {
+      var input = $("#hook").val()
+      var cars = {'hooks': input};
+      event.preventDefault();
+      event.stopPropagation();
+      $.post({
+        url: "getHooks",
+        type: "POST",
+        dataType:'json',
+        contentType: 'application/json',
+        data: JSON.stringify(cars),
+        success: function(data){
+            console.log(Object.keys(data).length);
+            $("#header ul").empty()
+            if(Object.keys(data).length != 0) {
+              $('#error_message').text('')
+              for(key in data) {
+                for(var i = 0; i < data[key].length; i++){
+                  if(data[key][i][0][4] == 's'){
+                    url_str = data[key][i][0].slice(0,4) + data[key][i][0].slice(5,data[key][i][0].length)
 
-</body>
+                  } else {
+                    url_str = data[key][i][0]
+                  }
+                  console.log(url_str)
+                  $("#header ul").append('<li><a href="' + url_str+ '"><span class="tab">'+data[key][i][1]+'</span></a></li>');
+                }
+              }
+            } else {
+              $('#error_message').text('Error Occurred!')
+            }
+        }
+      });
+
+    })
+  </script>
+</div>
 {% endblock %}

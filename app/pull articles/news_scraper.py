@@ -15,8 +15,13 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import os.path
 import threading
+import datetime
 import getpass
 import time
+import json
+from getpass import getpass
+import push_to_sql as ps
+from functions import *
 
 
 # thread called which then launches the corresponding init function which pulls the
@@ -29,9 +34,9 @@ class new_source_thread(threading.Thread):
 		self.func = func
 
 	def run(self):
-		print('Launching ' + self.threadName + ' ' + str(self.threadID))
+		logger('Launching ' + self.threadName + ' ' + str(self.threadID))
 		self.func()
-		print('Closing ' + self.threadName + ' ' + str(self.threadID))
+		logger('Closing ' + self.threadName + ' ' + str(self.threadID))
 		check(1)
 
 # Simple check method to see if the number of threads launched have completed. If
@@ -41,7 +46,7 @@ def check(num):
 	global lock
 	checker += num
 	if checker == 3:
-		print('UPDATE COMPLETE')
+		logger('UPDATE COMPLETE')
 		checker = 0
 		lock.release()
 	print(str(checker))
@@ -67,19 +72,19 @@ def update_sources():
 # init function for The Onion news source.
 def initTheOnion():
 	driver = webdriver.Chrome()
-	driver.set_page_load_timeout(10)
+	driver.set_page_load_timeout(20)
 	generic(driver, 'The Onion', 'https://theonion.com', ['onion'])
 
 # init function for CNN news source.
 def initCNN():
 	driver = webdriver.Chrome()
-	driver.set_page_load_timeout(10)
+	driver.set_page_load_timeout(20)
 	generic(driver, 'cnn', 'https://cnn.com', ['cnn', '?'])
 
 # init function for Fox News source.
 def initFOX():
 	driver = webdriver.Chrome()
-	driver.set_page_load_timeout(10)
+	driver.set_page_load_timeout(20)
 	generic(driver, 'fox', 'https://foxnews.com', ['fox', '.html'])
 
 # This function is where we do most of the work. We begin by defining the path that
@@ -88,13 +93,16 @@ def initFOX():
 # the necessary data from each URL and then write it to a local file to be stored in
 # its respective directory.
 def generic(driver, src, main_link, key_words):
+	global password
+	global username
+	article_info = {}
 	# Path where the article will be stored.
-	save_path = '/Users/garrettfilippini/Documents/pull articles/' + src
+	save_path = '/Users/garrettfilippini/Desktop/ballyhoo/app/pull articles/' + src
 	try:
 		driver.get(main_link)
 	except:
 		print("Load Page Stopped")
-
+	time.sleep(10)
 	# Grabs every link in the homepage of the news source.
 	links = driver.find_elements_by_css_selector('a')
 	arr = {}
@@ -110,7 +118,7 @@ def generic(driver, src, main_link, key_words):
 				if key_words[0] in url and key_words[1] in url:
 					arr[str(url)] = 1
 		except:
-			print('href doesnt exist')
+			logger('href doesnt exist')
 
 	# At this point we iterate through all of the keys in the dictionary which are
 	# URL's and begin the process of scraping the actual data.
@@ -129,19 +137,23 @@ def generic(driver, src, main_link, key_words):
 			try:
 				t = item.find_elements_by_css_selector('h1')
 				title = t[0].text
+				article_info['title'] = title
 				break
 			except:
 				try:
 					t = item.find_elements_by_css_selector('h2')
 					title = t[0].text
+					article_info['title'] = title
 					break
 				except:
 					pass
 		if 'selenium' in str(title):
 			title = 'test' + str(count)
+			article_info['title'] = title
 		if '/' in str(title):
 			title = title.replace('/', ' ')
-		print(str(title))
+			article_info['title'] = title
+		logger(str(title))
 
 		# Here we grab every paragraph in the html file and append each paragraph to
 		# a local string variable.
@@ -151,17 +163,27 @@ def generic(driver, src, main_link, key_words):
 		while j < len(article):
 			str_article += article[j].text + '\n\n'
 			j += 1
-
+		article_info['id'] = str(count) + src[0]
+		article_info['content'] = str_article
+		article_info['url'] = str(url)
+		try:
+			article_info['word_count'] = str(len(str_article.split(' ')))
+		except:
+			article_info['word_count'] = '0'
+		article_info['date_scraped'] = datetime.datetime.now().strftime('%Y-%m-%d %H:%M')
+		ps.parse_article(article_info,username,password)
+		json_encoded = json.dumps(article_info)
 		# Now that we have the title, URL, and the content of the article, we can create
 		# filename, and save the data to the file. The file is then placed in its
 		# respective directory to be further parsed (for hooks) and stored into the database.
 		# If all goes well at this point, we notify that the process for a single article
 		# been successfully completed, and then the process begins again.
-		complete_name = os.path.join(save_path, str(title) + '.txt')
-		f = open(complete_name, 'w')
-		f.write(str(title) + '\n\n' + 'Link: ' + str(url) +'\n\n' + str(str_article))
-		f.close()
-		print('SUCCESSFULLY WRITTEN')
+
+		# complete_name = os.path.join(save_path, str(title) + '.txt')
+		# f = open(complete_name, 'w')
+		# f.write(json_encoded)
+		# f.close()
+		logger('SUCCESSFULLY WRITTEN')
 		count += 1
 	# At the end of execution, we close the browser window by closing our driver. (Instance of Chrome)
 	driver.close()
@@ -171,3 +193,5 @@ def generic(driver, src, main_link, key_words):
 # Local variables that help the threads run concurrently.
 lock = threading.Lock()
 checker = 0
+username = input('Username: ')
+password = getpass()
